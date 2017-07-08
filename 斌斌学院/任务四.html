@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Documen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        #list {
+            margin: 20px;
+        }
+
+        #list li {
+            background: red;
+            color: aliceblue;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            display: inline-block;
+            padding: 0 5px;
+            margin-left: 10px;
+        }
+
+        #input {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <button id="left-in">左侧进</button>
+    <button id="right-in">右侧进</button>
+    <button id="left-out">左侧出</button>
+    <button id="right-out">右侧出</button>
+    <ul id="list">
+        <li>10</li>
+        <li>3</li>
+        <li>7</li>
+        <li>12</li>
+        <li>11</li>
+        <li>30</li>
+    </ul>
+    <script>
+        var input = document.getElementById('input');
+        var leftIn = document.getElementById('left-in');
+        var rightIn = document.getElementById('right-in');
+        var rightOut = document.getElementById('right-out');
+        var leftOut = document.getElementById('left-out');
+        var list = document.getElementById('list');
+        var lis = list.children;
+        //var pattern = /^[0-9]*$/g;
+        console.log(lis);
+        leftIn.onclick = function () {
+            if (input.value == "") {
+                alert("请输入数字");
+            } else if (!isNaN(input.value)) {
+                var li = document.createElement('li');
+                li.innerHTML = input.value;
+                list.insertBefore(li, list.children[0]);
+                input.value = "";
+            }else{
+                alert("请输入数字");
+            }
+        }
+        leftOut.onclick = function () {
+            list.removeChild(list.children[0]);
+        }
+        rightIn.onclick = function () {
+            if (input.value == "") {
+                alert("请输入数字");
+            } else if (!isNaN(input.value)) {
+                var li = document.createElement('li');
+                li.innerHTML = input.value;
+                list.appendChild(li);
+                input.value = "";
+            }else{
+                alert("请输入数字");
+            }
+        }
+        rightOut.onclick = function () {
+            list.removeChild(list.children[list.children.length - 1]);
+        }
+    </script>
+</body>
+</html>

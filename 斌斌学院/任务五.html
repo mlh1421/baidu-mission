@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Documen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        #list {
+            margin: 20px;
+            font-size: 0;
+        }
+
+        #list li {
+            background: red;
+            color: red;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            display: inline-block;
+            padding: 0 5px;
+            margin-left: 10px;
+            vertical-align: bottom;
+            width:30px;
+        }
+
+        #input {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <button id="left-in">左侧进</button>
+    <button id="right-in">右侧进</button>
+    <button id="left-out">左侧出</button>
+    <button id="right-out">右侧出</button>
+    <button id='bubbleSort'>排序</button>
+    <ul id="list">
+        <li>10</li>
+        <li>3</li>
+        <li>7</li>
+        <li>12</li>
+        <li>11</li>
+        <li>30</li>
+    </ul>
+    <script>
+        var input = document.getElementById('input');
+        var leftIn = document.getElementById('left-in');
+        var rightIn = document.getElementById('right-in');
+        var rightOut = document.getElementById('right-out');
+        var leftOut = document.getElementById('left-out');
+        var bubbleSort = document.getElementById('bubbleSort');
+        var list = document.getElementById('list');
+        var lis = list.children;
+        var pattern = /\./g;
+        for (var i = 0; i < list.children.length; i++) {
+            list.children[i].style.height = list.children[i].innerHTML + "px";
+        }
+        leftIn.onclick = function () {
+            if (input.value == "") {
+                alert("请输入数字");
+                input.value = "";
+            } else if (!isNaN(input.value)) {
+                if (list.children.length + 1 > 60) {
+                    alert("您输入的元素超过了60个");
+                } else {
+                    if (parseInt(input.value) < 10 || parseInt(input.value) > 100) {
+                        alert("请输入10-100之间的数字");
+                        input.value = "";
+                    } else {
+                        if (pattern.test(input.value)) {
+                            alert("请输入整数");
+                            input.value = "";
+                        } else {
+                            var li = document.createElement('li');
+                            li.innerHTML = input.value;
+                            li.style.height = input.value + "px";
+                            list.insertBefore(li, list.children[0]);
+                            input.value = "";
+                        }
+                    }
+                };
+            } else {
+                alert("请输入数字");
+                input.value = "";
+            }
+        }
+        leftOut.onclick = function () {
+            list.removeChild(list.children[0]);
+        }
+        rightIn.onclick = function () {
+            if (input.value == "") {
+                alert("请输入数字");
+                input.value = "";
+            } else if (!isNaN(input.value)) {
+                if (parseInt(input.value) < 10 || parseInt(input.value) > 100) {
+                    alert("请输入10-100之间的数字");
+                    input.value = "";
+                } else {
+                    if (pattern.test(input.value)) {
+                        alert("请输入整数");
+                        input.value = "";
+                    } else {
+                        var li = document.createElement('li');
+                        li.innerHTML = input.value;
+                        list.appendChild(li);
+                        input.value = "";
+                    }
+                }
+            } else {
+                alert("请输入数字");
+                input.value = "";
+            }
+        }
+        rightOut.onclick = function () {
+            list.removeChild(list.children[list.children.length - 1]);
+        }
+        bubbleSort.onclick = function () {
+            var value = [];
+            for (var i = 0; i < lis.length; i++) {
+                value.push(parseInt(lis[i].innerText))
+            }
+            for (var i = value.length - 1; i > 0; i--) {
+                for (var j = 0; j < i; j++) {
+                    if (value[j] < value[j + 1]) {
+                        var temp = value[j];
+                        value[j] = value[j + 1];
+                        value[j + 1] = temp;
+                    }
+                }
+            }
+            list.innerHTML = "";
+            for (var i = 0; i < value.length; i++) {
+                var li = document.createElement("li");
+                li.innerHTML = value[i];
+                list.appendChild(li);
+            }
+            for (var i = 0; i < list.children.length; i++) {
+                list.children[i].style.height = list.children[i].innerHTML + "px";
+            }
+        }
+    </script>
+</body>
+</html>

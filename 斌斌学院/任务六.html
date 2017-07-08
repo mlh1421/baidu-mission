@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Documen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        #list {
+            margin: 20px;
+            font-size: 0;
+        }
+
+        #list li {
+            background: red;
+            color: #fff;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            display: inline-block;
+            padding: 0 5px;
+            font-size: 2rem;
+            margin-left: 10px;
+            vertical-align: bottom;
+        }
+
+        #input {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea name="" id="input" cols="30" rows="10"></textarea>
+    <button id="left-in">左侧进</button>
+    <button id="right-in">右侧进</button>
+    <button id="left-out">左侧出</button>
+    <button id="right-out">右侧出</button>
+    <button id='bubbleSort'>排序</button>
+    <input id='search1' type="text">
+    <button id="search2">查询</button>
+    <button id="clear">清除查询结果</button>
+    <ul id="list">
+        <li>10</li>
+        <li>3</li>
+        <li>7</li>
+        <li>12</li>
+        <li>11</li>
+        <li>30</li>
+    </ul>
+    <script>
+        var input = document.getElementById('input');
+        var leftIn = document.getElementById('left-in');
+        var rightIn = document.getElementById('right-in');
+        var rightOut = document.getElementById('right-out');
+        var leftOut = document.getElementById('left-out');
+        var bubbleSort = document.getElementById('bubbleSort');
+        var list = document.getElementById('list');
+        var search1 = document.getElementById('search1');
+        var search2 = document.getElementById("search2");
+        var clear = document.getElementById('clear');
+        var lis = list.children;
+        var pattern = /\./g;
+        var reg = /[\u3002|\uff1f|\uff01|\uff0c|\u3001|\uff1b|\uff1a|\u201c|\u201d|\u2018|\u2019|\uff08|\uff09|\u300a|\u300b|\u3008|\u3009|\u3010|\u3011|\u300e|\u300f|\u300c|\u300d|\ufe43|\ufe44|\u3014|\u3015|\u2026|\u2014|\uff5e|\ufe4f|\uffe5|\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\[|\]|\{|\}|\-|\_|\+|\=|\||\\|||\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g;
+        leftIn.onclick = function () {
+            var text = input.value.split(reg).join(" ").split(/\s+/g);
+            for (let i = 0; i < text.length; i++) {
+                if (text[i] == "") {
+                    text.splice(i, 1);
+                }
+            }
+            for (let i = 0; i < text.length; i++) {
+                var li = document.createElement('li');
+                li.innerHTML = text[i];
+                list.insertBefore(li, list.children[0]);
+            }
+            input.value = "";
+        }
+        leftOut.onclick = function () {
+            list.removeChild(list.children[0]);
+        }
+        rightIn.onclick = function () {
+            var text = input.value.split(reg).join(" ").split(/\s+/g);
+            for (let i = 0; i < text.length; i++) {
+                if (text[i] == "") {
+                    text.splice(i, 1);
+                }
+            }
+            for (let i = 0; i < text.length; i++) {
+                var li = document.createElement('li');
+                li.innerHTML = text[i];
+                list.appendChild(li);
+            }
+            input.value = "";
+        }
+        rightOut.onclick = function () {
+            list.removeChild(list.children[list.children.length - 1]);
+        }
+        search2.onclick = function () {
+            clearSearch();
+            if (search1.value == "") {
+                alert("请输入查询词");
+            } else {
+                search();
+            }
+            search1.value = "";
+        }
+        clear.onclick = clearSearch;
+        function search() {
+                var ch = search1.value;
+                //var ptn = new RegExp(ch, "g");
+                //console.log(ptn);
+                for (let i = 0; i < list.children.length; i++) {
+                    if (list.children[i].innerHTML.indexOf(ch)>-1) {
+                        list.children[i].style.backgroundColor = "silver";//竟然有八哥//
+                    }
+                }
+        }
+            function clearSearch() {
+                for (var i = 0; i < list.children.length; i++) {
+                    if (list.children[i].style.backgroundColor == "silver") {
+                        list.children[i].style.backgroundColor = "red";
+                    }
+                }
+            }
+    </script>
+</body>
+</html>
